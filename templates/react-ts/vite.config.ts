@@ -1,9 +1,42 @@
 import react from "@vitejs/plugin-react";
 import path from "node:path";
 import { defineConfig } from "vite";
+import type { Plugin, ConfigEnv } from "vite";
 
-export default defineConfig(({ command }) => {
+interface TopbarPlugin extends Plugin {
+  name: string;
+  transform(
+    code: string,
+    id: string,
+  ):
+    | {
+        code: string;
+        map: null;
+      }
+    | undefined;
+}
+
+const createTopbarPlugin = (): TopbarPlugin => ({
+  name: "topbar-module",
+  transform(code, id) {
+    if (id.endsWith("vendor/topbar.js")) {
+      return {
+        code: `
+          let topbar;
+          (function(window, document) {
+            ${code}
+          })(window, document);
+          export default window.topbar;
+        `,
+        map: null,
+      };
+    }
+  },
+});
+
+export default defineConfig(({ command }: ConfigEnv) => {
   const isDev = command !== "build";
+
   if (isDev) {
     // Terminate the watcher when Phoenix quits
     process.stdin.on("close", () => {
@@ -13,9 +46,9 @@ export default defineConfig(({ command }) => {
     process.stdin.resume();
   }
 
-  return {
+  const config = {
     publicDir: "static",
-    plugins: [react()],
+    plugins: [react(), createTopbarPlugin()],
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./js"),
@@ -42,4 +75,6 @@ export default defineConfig(({ command }) => {
       },
     },
   };
+
+  return config;
 });
