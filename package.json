@@ -1,0 +1,15 @@
+{
+  "name": "exinertia-templates",
+  "scripts": {
+    "format": "prettier --write \"**/*.{js,json,md,yml,ts,tsx,jsx,css,scss}\"",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.4.1"
+  },
+  "lint-staged": {
+    "*.{js,json,md,yml,ts,tsx,jsx,css,scss}": "prettier --write"
+  }
+}
