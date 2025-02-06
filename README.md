@@ -13,7 +13,7 @@ Currently available:
 To use the React + TypeScript template inside your Phoenix project:
 
 ```bash
-bunx degit @nordbeam/exinertia_templates/react-ts assets
+bunx degit @nordbeam/exinertia_templates/templates/react-ts assets
 ```
 
 This will create a preconfigured assets folder in your Phoenix project with:
