@@ -58,7 +58,7 @@ export default defineConfig(({ command }: ConfigEnv) => {
       target: "esnext",
       emptyOutDir: false,
       polyfillDynamicImport: true,
-      outDir: "../priv/static/assets",
+      outDir: "../priv/static",
       sourcemap: isDev,
       manifest: "vite_manifest.json",
       rollupOptions: {
@@ -67,9 +67,9 @@ export default defineConfig(({ command }: ConfigEnv) => {
           inertia: "./js/inertia.tsx",
         },
         output: {
-          entryFileNames: "[name].[hash].js",
-          chunkFileNames: "[name].[hash].js",
-          assetFileNames: "[name].[hash][extname]",
+          entryFileNames: "assets/[name].[hash].js",
+          chunkFileNames: "assets/[name].[hash].js",
+          assetFileNames: "assets/[name].[hash][extname]",
         },
         external: ["/fonts/*", "/images/*"],
       },
